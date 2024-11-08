@@ -31,6 +31,7 @@ links = [l1, l2, l3, l4]
 
 
 
+
 def tog(a, b, c, d, Tc):
     if Tc == 2:
         Tta = acos((a**2 + d**2 - b**2 - c**2) / (2 * a * d) + (b * c) / (a * d))

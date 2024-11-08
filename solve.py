@@ -40,6 +40,7 @@ class Solver:
                                 self.gamma = link
                                 self.c = link.len
                                 break
+
                 #print (self.alpha.T, self.beta.T, self.gamma.T)
 
 
