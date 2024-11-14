@@ -54,7 +54,6 @@ for i in range(nframes):
     get_positions(T2[i], T3[i], T4[i])
 
 
-print(min(l4x), max(l4x))
 
 
 

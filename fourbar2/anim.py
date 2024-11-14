@@ -20,8 +20,9 @@ class Animation:
                 self.l4x = l4x
                 self.l4y = l4y
 
-                self.toggles = []
+                self.toggles_empty = True
                 if len(toggles) != 0:
+                    self.toggles_empty = False
                     self.toggles = cycle(toggles)
 
                 # Find minimum and maximum x and y
@@ -121,7 +122,7 @@ class Animation:
 
 
         def gotoframe(self, event):
-                if len(self.toggles) == 0:
+                if self.toggles_empty == True:
                     return
                 if not self.paused:
                     self.toggle_pause(event)
