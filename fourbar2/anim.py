@@ -6,7 +6,7 @@ from itertools import cycle
 
 
 class Animation:
-        def __init__(self, muf, l1x, l1y, l2x, l2y, l3x, l3y, l4x, l4y, frames):
+        def __init__(self, toggles, l1x, l1y, l2x, l2y, l3x, l3y, l4x, l4y, frames):
 
                 self.l1x = l1x
                 self.l1y = l1y
@@ -20,7 +20,9 @@ class Animation:
                 self.l4x = l4x
                 self.l4y = l4y
 
-                self.mufs = cycle(muf)
+                self.toggles = []
+                if len(toggles) != 0:
+                    self.toggles = cycle(toggles)
 
                 # Find minimum and maximum x and y
 
@@ -119,7 +121,9 @@ class Animation:
 
 
         def gotoframe(self, event):
+                if len(self.toggles) == 0:
+                    return
                 if not self.paused:
                     self.toggle_pause(event)
-                self.update(next(self.mufs))                
+                self.update(next(self.toggles))                
                 self.fig.canvas.draw()
