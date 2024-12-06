@@ -1,3 +1,8 @@
+# TWO-POSITION MOTION GENERATION BY ANALYTICAL SYNTHESIS
+# Section 5.4
+# Page 236
+# Numbers are from Example 5.1
+
 from Vector import *
 import numpy as np
 from math import pi, cos, sin, atan2, sqrt
@@ -16,6 +21,8 @@ gamma2 = 85.6 * pi / 180
 alpha2 = 43.3 * pi / 180
 delta2 = 165.2 * pi / 180
 p21 = 2.416
+
+# WZ dyad
 
 A = cos(beta2) - 1
 B = sin(beta2)
@@ -49,6 +56,7 @@ U1y = (A * (-C * S1.y - D * S1.x + F) + B * (C * S1.x - D * S1.y - E)) / (-2 * A
 U1 = Vector(U1x, U1y)
 sigma = ang(U1)
 
+# Lenghts
 
 V1 = Z1 - S1
 
@@ -63,10 +71,10 @@ R3 = R2 - U1
 R4 = R3 - O2
 R5 = R1 + Z1
 
-print(ang(R4))
+print(asin(mag(Z1)/mag(V1)) * 180 / pi)
 
-print(mag(W1), theta * 180 / pi)
-print(mag(U1), sigma * 180 / pi)
+#print(mag(W1), theta * 180 / pi)
+#print(mag(U1), sigma * 180 / pi)
 print(a, b, c, d)
 
 fig, axes = plt.subplots()
