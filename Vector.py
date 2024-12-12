@@ -34,7 +34,16 @@ class Vector:
 
 
 def ang(V):
-    return 2 * pi - atan2(V.y / V.x)
+    #return 2 * pi - atan2(V.y , V.x)
+    return atan2(V.y , V.x)
 
 def mag(V):
     return sqrt(V.x**2 + V.y**2)
+
+def unit(V):
+    return V * (1 / mag(V))
+
+def rotate(V, T):
+    a = V.x * cos(T) - V.y * sin(T)
+    b = V.x * sin(T) + V.y * cos(T)
+    return Vector(a, b)
