@@ -11,16 +11,15 @@ import matplotlib.pyplot as plt
 
 nframes = 1000
 
-z = 1.298
-s = 1.035
-phi = 26.5 * pi / 180
-psi = 104.1 * pi / 180
-beta2 = 38.4 * pi / 180
-gamma2 = 85.6 * pi / 180
-
-alpha2 = 43.3 * pi / 180
-delta2 = 165.2 * pi / 180
+z   = 1.298
+s   = 1.035
 p21 = 2.416
+phi    = radians(26.5)
+psi    = radians(104.1)
+beta2  = radians(38.4)
+gamma2 = radians(85.6)
+alpha2 = radians(43.3)
+delta2 = radians(165.2)
 
 # WZ dyad
 
@@ -56,7 +55,7 @@ U1y = (A * (-C * S1.y - D * S1.x + F) + B * (C * S1.x - D * S1.y - E)) / (-2 * A
 U1 = Vector(U1x, U1y)
 sigma = ang(U1)
 
-# Lenghts
+# Lengths
 
 V1 = Z1 - S1
 
@@ -71,12 +70,19 @@ R3 = R2 - U1
 R4 = R3 - O2
 R5 = R1 + Z1
 
-print(asin(mag(Z1)/mag(V1)) * 180 / pi)
+# The angle between V1 and Z1 is found using definition of dot product
+# Z . V = |Z| |V| cos T
+dot_ZV = Z1.x * V1.x + Z1.y * V1.y
+ang_ZV = acos(dot_ZV / mag(Z1) / mag(V1))
 
-#print(mag(W1), theta * 180 / pi)
-#print(mag(U1), sigma * 180 / pi)
-print(a, b, c, d)
+print('{:40} = {:.3f} deg'.format('Angle between V1 and Z1', degrees(ang_ZV)))
+print('{:40} = {:.3f} deg'.format('Angle between link 1 and horizontal', degrees(ang(R4))))
+print('a = {:.3f}'.format(a))
+print('b = {:.3f}'.format(b))
+print('c = {:.3f}'.format(c))
+print('d = {:.3f}'.format(d))
 
+# The following is for graphically checking out the results
 fig, axes = plt.subplots()
 plt.plot([O2.x, W1.x], [O2.y, W1.y], 'k')
 plt.plot([R2.x, W1.x], [R2.y, W1.y], 'b')
@@ -84,6 +90,4 @@ plt.plot([R2.x, R3.x], [R2.y, R3.y], 'r')
 plt.plot([O2.x, R3.x], [O2.y, R3.y], 'g')
 plt.plot([R1.x, R5.x], [R1.y, R5.y], 'b')
 plt.plot([R2.x, R5.x], [R2.y, R5.y], 'b')
-
 plt.show()
-

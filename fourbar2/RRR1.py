@@ -36,13 +36,16 @@ def get_toggles(TA, TB):
 
         dif = abs(TA[i] - TB[i])
 
-        if abs(dif - pi) < ang_0:
-            ang_0 = abs(dif - pi)
+        if abs(dif - pi) < ang_pi:
+            ang_pi = abs(dif - pi)
+            frm_pi = i
+
+        if abs(dif - 0) < ang_0:
+            ang_0 = abs(dif - 0)
             frm_0 = i
 
-        if abs(dif - 0) < ang_pi:
-            ang_pi = abs(dif - 0)
-            frm_pi = i
+    if ang_pi > 0.1 and ang_0 > 0.1:
+        return []
 
     return [frm_0, frm_pi]
 

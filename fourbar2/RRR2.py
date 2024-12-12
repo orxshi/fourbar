@@ -1,33 +1,29 @@
 # Input is the longest (RRR2)
+# The code solves Example 5.1
 
 from anim_motion import Animation
 import matplotlib.pyplot as plt
 import numpy as np
-from math import pi, cos, sin, acos, atan2, sqrt, radians
+from math import pi, cos, sin, acos, atan2, sqrt
 from Vector import *
 
 
 nframes = 1000
 
-# The lengths of the links # obtained from syn_two_pos_motion_out.py
-a = 2.4669035392921197 # Link 2: Input
-b = 1.47616572201359 # Link 3: Coupler
-c = 1.4856279407910054 # Link 4
-d = 1.7007994988171315 # Link 1: Ground
+# The following lengths ang angles are determined by syn_two_pos_motion_out.py
+a = 2.467 # Link 2
+b = 1.476 # Link 3
+c = 1.486 # Link 4
+d = 1.701 # Link 1
+T_VZ = 43.219 # angle (deg) between V(coupler) and Z
+T_1H = 63.404 # angle (deg) between link1 and horizontal # this is for making link1 horizontal.
+
+# The following lengths ang angles are free choices given in Example 5.1
 z = 1.298
 s = 1.035
-T_VZ = 61.558647445071855 # deg # angle between V(coupler) and Z
-T_1H = 1.1066135686116216 # rad # angle the link1 makes with horizontal # this is for making link1 horizontal.
-
-
-def get_toggles_analytically():
-
-    # See figure 4.20 (p. 211) and equation 4.37 (p.212).
-
-    T_min = acos((a**2 + d**2 - b**2 - c**2) / (2 * a * d) + (b * c) / (a * d))
-    T_max = acos((a**2 + d**2 - b**2 - c**2) / (2 * a * d) - (b * c) / (a * d))
-
-    return T_min, T_max
+theta = 71.6 # deg
+beta = 38.4 # deg
+alpha = 43.3 # deg
 
 
 def get_toggles(TA, TB):
@@ -41,13 +37,16 @@ def get_toggles(TA, TB):
 
         dif = abs(TA[i] - TB[i])
 
-        if abs(dif - pi) < ang_0:
-            ang_0 = abs(dif - pi)
+        if abs(dif - pi) < ang_pi:
+            ang_pi = abs(dif - pi)
+            frm_pi = i
+
+        if abs(dif - 0) < ang_0:
+            ang_0 = abs(dif - 0)
             frm_0 = i
 
-        if abs(dif - 0) < ang_pi:
-            ang_pi = abs(dif - 0)
-            frm_pi = i
+    if ang_pi > 0.1 and ang_0 > 0.1:
+        return []
 
     return [frm_0, frm_pi]
 
@@ -66,27 +65,26 @@ def get_positions(t2, t3, t4):
     l4x[i] = l3x[i] + c * cos(t4)
     l4y[i] = l3y[i] + c * sin(t4)
 
-    V = Vector.polar(b, t3)
-    R = rotate(V, radians(T_VZ))
-    K = unit(R) * z
+    V = Vector.polar(b, t3) # the coupler vector
+    R = rotate(V, radians(T_VZ)) # rotating the coupler to get a vector in AP direction but with wrong magnitude
+    K = unit(R) * z # the AP vector
 
-    l5x[i] = l2x[i] + K.x
-    l5y[i] = l2y[i] + K.y
+    l5x[i] = l2x[i] + K.x # the x of P point
+    l5y[i] = l2y[i] + K.y # the y of P point
 
 
 
-# Determine min/max of T2
-T_min, T_max = radians(71.6) - T_1H, radians(71.6 + 38.4) - T_1H
+# Set min/max of T2
+T_min, T_max = radians(theta - T_1H), radians(theta + beta - T_1H)
 
 # Allocate space for angles
 T1 = np.empty(nframes)
-
 T2_forw = np.linspace(T_min + 0.0001, T_max - 0.0001, num=int(nframes/2))
 T2_back = np.flip(T2_forw)
 T2 = np.concatenate([T2_forw, T2_back])
 T3 = np.empty(nframes)
 T4 = np.empty(nframes)
-alpha2_forw = np.linspace(0, 43.3 * pi / 180, num=int(nframes/2))
+alpha2_forw = np.linspace(0, radians(alpha), num=int(nframes/2))
 alpha2_back = np.flip(alpha2_forw)
 alpha2 = np.concatenate([alpha2_forw, alpha2_back])
 
@@ -134,7 +132,7 @@ for i, t2 in enumerate(T2):
     assert(abs(l4y[i] - 0) < 0.1)
 
 
-toggles = get_toggles(T3, T4) # which will return T_min, T_max
+toggles = get_toggles(T3, T4)
 
 anim = Animation(toggles, l1x, l1y, l2x, l2y, l3x, l3y, l4x, l4y, l5x, l5y, nframes)
 plt.show()
