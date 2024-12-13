@@ -47,3 +47,10 @@ def rotate(V, T):
     a = V.x * cos(T) - V.y * sin(T)
     b = V.x * sin(T) + V.y * cos(T)
     return Vector(a, b)
+
+def dot(V1, V2):
+    return V1.x * V2.x + V1.y + V2.y
+
+def ang(V1, V2):
+    # returns angle between V1 and V2 using dot product
+    return asin(dot(V1, V2) / (mag(V1) * mag(V2)))
