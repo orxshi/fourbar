@@ -22,6 +22,12 @@ VA  = a * omega2 * complex(-sin(theta2), cos(theta2))
 VBA = b * omega3 * complex(-sin(theta3), cos(theta3))
 VB  = c * omega4 * complex(-sin(theta4), cos(theta4))
 
+# alternatively
+#from Vector import Vector, rotate, sign, unit, mag
+#RA = Vector.polar(a, theta2)
+#VAA = omega2 * rotate(RA, pi / 2)
+
+
 '''
 You can call the following two statements to print VA in Cartesian or polar form.
 However, numbers are not pretty and you cannot round the numbers such as round(VA, 2).

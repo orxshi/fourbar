@@ -53,3 +53,6 @@ def dot(V1, V2):
 def ang2(V1, V2):
     # returns angle between V1 and V2 using dot product
     return asin(dot(V1, V2) / (mag(V1) * mag(V2)))
+
+def sign(a):
+    return a / abs(a)
