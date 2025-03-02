@@ -1,4 +1,5 @@
 # Example 4.2 (p. 197)
+# Position Analysis of a Fourbar Crank-Slider Linkage with the Vector Loop Method
 
 from anim import Animation
 import matplotlib.pyplot as plt

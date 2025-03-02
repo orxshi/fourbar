@@ -1,4 +1,5 @@
 # Example 4.1 (p. 194)
+# Position Analysis of a Fourbar Linkage with the Vector Loop Method
 
 from math import pi, cos, sin, atan2, sqrt, radians, degrees
 

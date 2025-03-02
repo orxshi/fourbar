@@ -1,7 +1,7 @@
 # Example 4.2 (p. 197)
+# Position Analysis of a Fourbar Crank-Slider Linkage with the Vector Loop Method
 
 from math import pi, cos, sin, asin, degrees, radians
-import matplotlib.pyplot as plt
 
 
 # The lengths of the links
@@ -28,20 +28,3 @@ if theta3_open < 0:
 print('theta3_open:', round(degrees(theta3_open), 2))
 print('theta3_cros:', round(degrees(theta3_cros), 2))
 print('d:', round(d, 2))
-
-# Display crossed configuration
-O2x = 0
-O2y = 0
-
-Ax = O2x + a * cos(theta2)
-Ay = O2y + a * sin(theta2)
-
-Bx = Ax - b * cos(theta3_cros)
-By = Ay - b * sin(theta3_cros)
-
-fig, axes = plt.subplots()
-
-link2, = axes.plot([O2x, Ax], [O2y, Ay], '-ko')
-link3, = axes.plot([Ax, Bx], [Ay, By], '-ko')
-
-plt.show()
