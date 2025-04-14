@@ -11,9 +11,9 @@ omega3 = a * cos(theta2) * omega2 / b / cos(theta3_open)
 
 print('omega3:', round(omega3, 3))
 
-d = -a * omega2 * sin(theta2) + b * omega3 * sin(theta3_open)
+ddot = -a * omega2 * sin(theta2) + b * omega3 * sin(theta3_open)
 
-print('d:', round(d))
+print('ddot:', round(ddot))
 
 VA  = a * omega2 * complex(-sin(theta2), cos(theta2))
 VAB = b * omega3 * complex(-sin(theta3_open), cos(theta3_open))

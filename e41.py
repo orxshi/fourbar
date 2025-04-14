@@ -10,7 +10,7 @@ b = 120
 c = 80
 d = 100
 
-theta2 = radians(40)
+theta2 = radians(30)
 theta1 = 0
 
 
