@@ -5,10 +5,6 @@ from math import pi, cos, sin, atan2, sqrt, radians
 
 def pos(a, b, c, d, theta2):
 
-    
-
-
-
     K1 = d / a
     K2 = d / c
     K3 = (a**2 - b**2 + c**2 + d**2) / (2 * a * c)
