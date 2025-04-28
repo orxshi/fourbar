@@ -72,3 +72,7 @@ def ang2(V1, V2):
 
 def sign(a):
     return a / abs(a)
+
+def cross(V1, V2):
+    # planar cross product
+    return V1.x * V2.y - V1.y * V2.x

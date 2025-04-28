@@ -8,9 +8,12 @@ from Vector import Vector, rotate, unit, mag
 from scipy import linalg
 import numpy as np
 from math import radians
+from constants import *
 
 
-def force(a, b, c, d, theta2, omega2, alpha2):
+
+
+def force(a, b, c, d, theta2, omega2, alpha2, m2, m3, m4, IG2, IG3, IG4, CG2_LRCS, CG3_LRCS, CG4_LRCS):
 
   # Link 1 kinematics
   theta1 = 0
@@ -30,29 +33,8 @@ def force(a, b, c, d, theta2, omega2, alpha2):
   # acceleration analysis
   alpha3, alpha4 = acc(a, b, c, d, theta2, theta3, theta4, omega2, omega3, omega4, alpha2)
 
-  # gravitational acceleration
-  g = 386 # in/s^2
-
-  # Following center of gravities are in LRCS
-  CG1_LRCS  = Vector.polar(19, radians(0))
-  CG2_LRCS  = Vector.polar(3, radians(30))
-  CG3_LRCS  = Vector.polar(9, radians(45))
-  CG4_LRCS  = Vector.polar(5, radians(0))
-  RPG3_LRCS = Vector.polar(3, radians(100))
-  # External force at P in GCS
-  FP = Vector.polar(80, radians(330))
-  # External torque on link 4 in GCS
-  T4 = 120 # lb.in
-  # Weights
-  w2 = 1.5 # lb
-  w3 = 7.7 # lb
-  w4 = 5.8 # lb
-  # Mass moment of inertias
-  IG2 = 0.4 # lb.in.s^2
-  IG3 = 1.5 # lb.in.s^2
-  IG4 = 0.8 # lb.in.s^2
-
-
+  
+  
   RO2  = Vector.polar(0, 0)
   RO4  = RO2 + Vector.polar(d, 0)
   RA   = RO2 + Vector.polar(a, theta2)
@@ -86,10 +68,7 @@ def force(a, b, c, d, theta2, omega2, alpha2):
   # print('AG3:', AG3)
   # print('AG4:', AG4)
 
-  # compute masses of links
-  m2 = w2 / g
-  m3 = w3 / g
-  m4 = w4 / g
+  
 
   CG2 = rotate(CG2_LRCS, theta2)
   # The following vectors are respect to CGs of links
@@ -179,26 +158,15 @@ def force(a, b, c, d, theta2, omega2, alpha2):
   return x
 
 
-# Link lengths
-a = 5
-b = 15
-c = 10
-d = 19
+# # Link lengths
+# a = 5
+# b = 15
+# c = 10
+# d = 19
 
-# Link 2 kinematics
-theta2 = radians(60)
-omega2 = 25 # rad/s
-alpha2 = -40 # rad/s^2
+# # Link 2 kinematics
+# theta2 = radians(60)
+# omega2 = 25 # rad/s
+# alpha2 = -40 # rad/s^2
 
-x = force(a, b, c, d, theta2, omega2, alpha2)
-
-# F12x = x[0]
-# F12y = x[1]
-# F14x = x[6]
-# F14y = x[7]
-
-# F12 = Vector(F12x, F12y)
-# F14 = Vector(F14x, F14y)
-
-# # shaking force
-# Fs = -(F12 + F14)
+# x = force(a, b, c, d, theta2, omega2, alpha2)
