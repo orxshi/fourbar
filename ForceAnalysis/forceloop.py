@@ -51,9 +51,9 @@ def forceloop(m2, m3, m4, IG2, IG3, IG4, CG2_LRCS, CG3_LRCS, CG4_LRCS):
     ax.vlines(Th, 0, Fs)
     plt.show()
 
-    # Shaking moment about O2
-    plt.plot(Theta_deg, Ms)
-    plt.show()
+    # # Shaking moment about O2
+    # plt.plot(Theta_deg, Ms)
+    # plt.show()
 
 # forceloop()
 

@@ -5,29 +5,7 @@ from constants import *
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Th = []
-# Fs = []
-# reso = 100
-# Theta_rad = np.linspace(0, 2 * pi, reso)[:-1]
-# Theta_deg = np.linspace(0, 360, reso)[:-1]
-# T12 = []
-# Ms = []
-
-
 def balance(a, b, c):
-
-    # g = 386 # in/s^2
-    # w2 = 1.5 # lb
-    # w3 = 7.7 # lb
-    # w4 = 5.8 # lb
-
-    # m2 = w2 / g # blob
-    # m3 = w3 / g # blob
-    # m4 = w4 / g
-
-    # CG2_LRCS = Vector.polar(3, radians(30))
-    # CG3_LRCS = Vector.polar(9, radians(45))
-    # CG4_LRCS = Vector.polar(5, radians(0))
 
     b3 = mag(CG3_LRCS)
     phi3 = ang(CG3_LRCS)
@@ -87,17 +65,30 @@ forceloop(m2, m3, m4, IG2, IG3, IG4, CG2_LRCS, CG3_LRCS, CG4_LRCS)
 cw2, cw4 = balance(a, b, c)
 
 # assume counter masses are the same as associates
-r2 = mag(cw2) / m2
-r4 = mag(cw4) / m4
-IG2 += m2 * r2 ** 2
-IG4 += m4 * r4 ** 2
+# r2 = mag(cw2) / m2
+# r4 = mag(cw4) / m4
+
+# new CG = (m2 * CG2 + m2 * r2) / (2 * m2)
+# new CG = (m2 * CG2 + cw2) / (2 * m2)
+CG2_LRCS_new = (m2 * CG2_LRCS + cw2) / (2 * m2)
+CG4_LRCS_new = (m4 * CG4_LRCS + cw4) / (2 * m4)
+
+G2_CG2 = CG2_LRCS - CG2_LRCS_new
+G4_CG4 = CG4_LRCS - CG4_LRCS_new
+
+G2_r2 = cw2 / m2 - CG2_LRCS_new
+G4_r4 = cw4 / m4 - CG4_LRCS_new
+
+IG2 = m2 * mag(G2_CG2) ** 2 + m2 * mag(G2_r2) ** 2
+IG4 = m4 * mag(G4_CG4) ** 2 + m4 * mag(G4_r4) ** 2
+
 m2 *= 2
 m4 *= 2
-CG2_LRCS += cw2
-CG4_LRCS += cw4
+
+CG2_LRCS = CG2_LRCS_new
+CG4_LRCS = CG4_LRCS_new
 
 forceloop(m2, m3, m4, IG2, IG3, IG4, CG2_LRCS, CG3_LRCS, CG4_LRCS)
-
 
 
 # todo: draw counter weights for given theta in the example.

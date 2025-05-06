@@ -31,6 +31,16 @@ class Vector:
         y = self.y * S 
         return Vector(x=x, y=y)
     
+    def __truediv__(self, S):
+        x = self.x / S 
+        y = self.y / S 
+        return Vector(x=x, y=y)
+    
+    def __rtruediv__(self, S):
+        x = self.x / S 
+        y = self.y / S 
+        return Vector(x=x, y=y)
+    
     def __neg__(self):
         return Vector(-self.x, -self.y)
     
